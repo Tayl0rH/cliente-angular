@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IEvent } from '../interfaces/i-event';
+import { NgClass } from "../../../node_modules/@angular/common/types/_common_module-chunk";
 
 @Component({
   selector: 'app-events-show',
-  imports: [],
+  imports: [NgClass],
   templateUrl: './events-show.html',
   styleUrl: './events-show.css',
 })
