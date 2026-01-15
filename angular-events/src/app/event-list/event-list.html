@@ -1,0 +1,14 @@
+<div>
+  <hr>
+  <h2>Ejercicio 13</h2>
+
+  <input type="text"
+          [(ngModel)]="filterSearch"
+          name="filterSearch"
+          id="filterSearch">
+
+  @for (event of events | titleFilter: filterSearch ; track event.id)
+  {
+    {{ event.title }} ||
+  }
+</div>
