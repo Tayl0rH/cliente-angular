@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { IEvent } from '../interfaces/i-event';
-import { NgClass } from '@angular/common';
 import { FormsModule } from "@angular/forms";
 import { TitleFilterPipe } from '../pipes/title-filter-pipe';
 
 @Component({
   selector: 'app-event-list',
-  imports: [NgClass, FormsModule, TitleFilterPipe],
+  imports: [ FormsModule, TitleFilterPipe],
   templateUrl: './event-list.html',
   styleUrl: './event-list.css',
 })
