@@ -69,12 +69,15 @@ export class EventsShow {
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(fileInput.files[0]);
     reader.addEventListener('loadend', (e) => {
-      this.newEvent.image = reader.result;
+      this.newEvent.image = reader.result as string;
     });
+
+
   }
   addEvent() {
     this.events.push(this.newEvent);
 
+    console.log(this.newEvent);
     this.newEvent = {
       title: '',
       description: '',
