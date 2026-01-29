@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
 import { IEvent } from '../interfaces/i-event';
-import { CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { EventFilterPipe } from '../pipes/event-filter-pipe';
 import { FormsModule } from '@angular/forms';
+import { EventItem } from "./event-item/event-item";
+import { EventAdd } from "./event-add/event-add";
+import { EventService } from '../event-service';
 
 @Component({
   selector: 'app-events-show',
-  imports: [DatePipe, CurrencyPipe, TitleCasePipe, EventFilterPipe, FormsModule],
+  imports: [EventFilterPipe, FormsModule, EventItem, EventAdd],
   templateUrl: './events-show.html',
   styleUrl: './events-show.css',
 })
 export class EventsShow {
-  events: IEvent[] = [
+
+ /*  events: IEvent[] = [
     {
       title: 'Discoteca spook',
       image: '/images/spook.jpg',
@@ -52,39 +55,17 @@ export class EventsShow {
         'Un encuentro profesional pensado para conectar ideas, personas y oportunidades en un entorno dinámico, moderno y cuidadosamente organizado.',
       price: 0,
     },
-  ];
+  ]; */
 
-  newEvent: IEvent = {
-    title: '',
-    description: '',
-    image: '',
-    price: 0,
-    date: '',
-  };
+  events:IEvent[]=[];
+  constructor(private eventServ:EventService){}
 
-  changeImage(fileInput: HTMLInputElement) {
-    if (!fileInput.files || fileInput.files.length === 0) {
-      return;
-    }
-    const reader: FileReader = new FileReader();
-    reader.readAsDataURL(fileInput.files[0]);
-    reader.addEventListener('loadend', (e) => {
-      this.newEvent.image = reader.result as string;
-    });
-
-
+  ngOnInit():void {
+    this.events=this.eventServ.getEvents();
   }
-  addEvent() {
-    this.events.push(this.newEvent);
 
-    console.log(this.newEvent);
-    this.newEvent = {
-      title: '',
-      description: '',
-      image: '',
-      price: 0,
-      date: '',
-    };
+  storingEvent(newEvent: IEvent){
+    this.events =[...this.events, newEvent];
   }
 
   search: string = '';
@@ -99,5 +80,12 @@ export class EventsShow {
   orderPrice() {
     this.search = '';
     this.events = [...this.events].sort((a, b) => a.price - b.price);
+  }
+
+  deleteEvent(thisEvent: IEvent){
+  /*
+    this.events.splice(this.events.indexOf(thisEvent), 1);
+  */
+    this.events = this.events.filter((e) => e !== thisEvent);
   }
 }

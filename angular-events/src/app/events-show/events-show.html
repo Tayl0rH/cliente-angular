@@ -17,49 +17,24 @@
 
 <!-- Formulario Añadir Evento -->
 
-<form class="mt-4" (ngSubmit)="addEvent()">
-  <div class="form-group">
-    <label for="name">Nombre</label>
-    <input type="text" class="form-control" name="title" [(ngModel)]="newEvent.title" placeholder="Enter
-name">
-  </div>
-  <div class="form-group">
-    <label for="date">Fecha</label>
-    <input type="date" class="form-control" name="date" [(ngModel)]="newEvent.date">
-  </div>
-  <div class="form-group">
-    <label for="description">Descripción</label>
-    <textarea class="form-control" name="description" rows="3" [(ngModel)]="newEvent.description"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="price">Precio</label>
-    <input type="number" class="form-control" name="price" min="0.00" max="10000.00" step="0.01" [(ngModel)]="newEvent.price"/>
-  </div>
-  <div class="form-group">
-    <label for="image">Imagen</label>
-    <input type="file" class="form-control" name="image" #fileImage >
-  </div>
-  <img [src]="newEvent.image" alt="" class="img-thumbnail"><br>
-  <button type="submit" class="btn btn-primary">Create</button>
-</form>
+<app-event-add (addingEvent)="storingEvent($event)"/>
 
 <!-- Show Eventos -->
 <div class="row">
   @for (event of (events | eventFilter: search); track event) {
   @if (events.length <=0) { <h3>No hay eventos...</h3>
     }
-    <div class="col-6 mt-4"> <!-- Repetir esto por cada evento -->
-      <div class="card">
-        <img class="card-img-top" [src]="event.image">
-        <div class="card-body">
-          <h4 class="card-title">{{event.title | titlecase}}</h4>
-          <p class="card-text" [innerText]="event.description"></p>
-        </div>
-        <div class="card-footer text-muted d-flex justify-content-between">
-          {{event.date | date : 'dd/MM/yyyy' }}
-          <span class="float-right">{{event.price | currency: 'EUR'}}</span>
-        </div>
-      </div>
+    <div class="col-6 mt-4">
+
+      <!--
+      Repetir esto por cada evento
+
+
+      Aquí <app-event-item>
+      -->
+      <app-event-item [event]="event" class="card" (deletingEvent)="deleteEvent(event)"/>
+
+
     </div>
     }
 </div>
